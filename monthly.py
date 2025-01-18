@@ -11,7 +11,7 @@ print(ticker)
 
 # Fetch price and dividend data
 tqqq_data = yf.Ticker(ticker)
-prices = tqqq_data.history(start=start_date, end=end_date)['Close']
+prices = tqqq_data.history(start=start_date, end=end_date)['Close']  #the price has already been Adjusted for dividend and splits
 dividends = tqqq_data.dividends
 
 # Resample data to the end of each month
@@ -34,9 +34,9 @@ for date, price in monthly_prices.items():
         total_shares += investment_per_month / price
         
         # Reinvest dividends for the month
-        if date in monthly_dividends.index and not pd.isna(monthly_dividends[date]):
-            dividend = monthly_dividends[date] * total_shares
-            total_shares += dividend / price
+        # if date in monthly_dividends.index and not pd.isna(monthly_dividends[date]):
+        #     dividend = monthly_dividends[date] * total_shares
+        #     total_shares += dividend / price
         
         # Track portfolio value
         portfolio_values.append(total_shares * price)
